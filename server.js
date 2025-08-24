@@ -10,6 +10,8 @@ const visitorstatsroutes = require("./routers/visitorRoute")
 
 const movieRoutes = require('./routers/movieRoutes');
 const seriesRoutes = require('./routers/seriesRoutes');
+const genreRoutes = require("./routers/genreRouter");
+const searchRoues = require("./routers/searchRouter");
 
 const app = express();
 
@@ -21,6 +23,8 @@ app.use(express.json());
 app.use(morgan('dev'));
 
 // Routes
+app.use("/api/search", searchRoues);
+app.use("/api/genre", genreRoutes);
 app.use('/api/movies', movieRoutes);
 app.use('/api/series', seriesRoutes);
 app.use("/api/visitors", visitorstatsroutes)

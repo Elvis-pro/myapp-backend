@@ -21,25 +21,6 @@ exports.createSeries = async (req, res) => {
   }
 };
 
-//finding tv series by Genre
-exports.findByGenre = async (req, res) => {
-  try {
-    const genre = req.query.name; // e.g. ?name=action
-
-    const series = await Series.find({
-      genres: { $in: [genre.toUpperCase()] } // matches array values
-    });
-
-    if (!series.length) {
-      return res.status(404).json({ message: "No series found for this genre" });
-    }
-
-    res.status(200).json(series);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-};
-
 //Adding new episodes and updating
 // POST /series/:id/seasons/:seasonId/episodes
 exports.addEpisode = async (req, res) => {
@@ -68,6 +49,60 @@ exports.addEpisode = async (req, res) => {
   }
 };
 
+//recentlyadded series
+exports.getRecentlyAdded = async (req, res) => {
+  try {
+    const series = await Series.find().sort({ releaseDate: -1 }).limit(10);
+    res.json(series);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//toprated movie
+exports.getTopRated = async (req, res) => {
+  try {
+    const series = await Series.find().sort({ rating: -1 }).limit(10);
+    res.json(series);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//Most popular series
+exports.getMostPopular = async (req, res) => {
+  try {
+    const series = await Series.find().sort({ views: -1 }).limit(10);
+    res.json(series);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Get movie by slug and increase views
+exports.getSeriesBySlug = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    // Find movie by slug and increment views
+    const series = await Series.findOneAndUpdate(
+      { slug },
+      { $inc: { views: 1 } },  // 👈 increase views count
+      { new: true }            // return updated movie
+    );
+
+    if (!series) {
+      return res.status(404).json({ message: "Movie not found" });
+    }
+
+    res.status(200).json(series);
+
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+//delete series by ID
 exports.deleteById = async (req, res) => {
   try {
     const { id } = req.params; // get id from URL
