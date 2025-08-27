@@ -1,4 +1,4 @@
-const ShortLink = require('../models/ShortLink');
+const ShortLink = require('../models/shortLink');
 const generateSlug = require('../Utils/generateSlug');
 
 const createShortLink = async (req, res) => {
