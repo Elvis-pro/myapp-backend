@@ -52,17 +52,17 @@ exports.addEpisode = async (req, res) => {
 //recentlyadded series
 exports.getRecentlyAdded = async (req, res) => {
   try {
-    const series = await Series.find().sort({ releaseDate: -1 }).limit(10);
+    const series = await Series.find().sort({ releaseDate: -1 });
     res.json(series);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 };
 
-//toprated movie
+//toprated series
 exports.getTopRated = async (req, res) => {
   try {
-    const series = await Series.find().sort({ rating: -1 }).limit(10);
+    const series = await Series.find().sort({ rating: -1 });
     res.json(series);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -72,7 +72,7 @@ exports.getTopRated = async (req, res) => {
 //Most popular series
 exports.getMostPopular = async (req, res) => {
   try {
-    const series = await Series.find().sort({ views: -1 }).limit(10);
+    const series = await Series.find().sort({ views: -1 });
     res.json(series);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -101,6 +101,18 @@ exports.getSeriesBySlug = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
+// Get trending series (sorted by views)
+exports.getTrendingMovies = async (req, res) => {
+  try {
+    // Find top series sorted by views (highest first)
+    const series = await Series.find().sort({ views: -1 })   // 👈 descending order
+    res.status(200).json(series);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
 
 //delete series by ID
 exports.deleteById = async (req, res) => {

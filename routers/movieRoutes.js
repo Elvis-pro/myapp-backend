@@ -7,6 +7,7 @@ router.post('/', movieController.createMovie);
 router.get("/gettoprated", movieController.getTopRated)
 router.get("/getRecentlyAdded", movieController.getRecentlyAdded)
 router.get("/getMostPopular", movieController.getMostPopular)
+router.get("/gettrendingmovies", movieController.getTrendingMovies)
 router.get("/getMovieBySlug/:slug", movieController.getMovieBySlug)
 router.delete("/deleteById/:id", movieController.deletebyId)
 

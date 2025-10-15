@@ -6,6 +6,7 @@ router.get('/', seriesController.getAllSeries);
 router.get("/getRecentlyAddedSeries", seriesController.getRecentlyAdded);
 router.get("/getMostPopular", seriesController.getMostPopular);
 router.get("/getTopRated", seriesController.getTopRated);
+router.get("/gettrendingseries", seriesController.getTrendingMovies)
 router.get("/getSeriesBySlug/:slug", seriesController.getSeriesBySlug);
 router.post('/', seriesController.createSeries);
 router.post('/series/:id/seasons/:seasonId/episodes', seriesController.addEpisode);
